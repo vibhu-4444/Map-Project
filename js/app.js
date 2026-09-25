@@ -21,6 +21,7 @@ import { PdfExporter } from './export/pdf-exporter.js';
 import { DxfExporter } from './export/dxf-exporter.js';
 import { AIRequirementParser } from './services/ai-parser.js';
 import { StorageService } from './services/storage.js';
+import { PillNav } from './components/PillNav.js';
 
 export class FloorPlanArchitectApp {
   constructor() {
@@ -35,6 +36,7 @@ export class FloorPlanArchitectApp {
     this.renderer2d = null;
     this.interactionController = null;
     this.viewer3d = null;
+    this.pillNav = null;
 
     this.initDOM();
     this.initEngines();
@@ -52,6 +54,37 @@ export class FloorPlanArchitectApp {
     if (viewer3dContainer) {
       this.viewer3d = new ArchitecturalViewer3D(viewer3dContainer);
     }
+
+    this.initPillNav();
+  }
+
+  initPillNav() {
+    const container = document.getElementById('main-pill-nav-container');
+    if (!container) return;
+
+    this.pillNav = new PillNav({
+      container,
+      logo: '📐',
+      logoAlt: 'Craft Your Archi',
+      baseColor: '#38bdf8',
+      pillColor: '#090d16',
+      hoveredPillTextColor: '#030712',
+      pillTextColor: '#cbd5e1',
+      activeHref: '#editor2d',
+      items: [
+        { label: '📐 2D CAD Plan', href: '#editor2d', tab: 'editor2d' },
+        { label: '🧊 3D Studio', href: '#viewer3d', tab: 'viewer3d' },
+        { label: '📊 Room Schedule', href: '#schedule', tab: 'schedule' },
+        { label: '💰 Cost Estimator', href: '#costs', tab: 'costs' },
+        { label: '🧭 Vastu Audit', href: '#vastu', tab: 'vastu' }
+      ],
+      onItemClick: (item, e) => {
+        if (e) e.preventDefault();
+        if (item.tab) {
+          this.switchTab(item.tab);
+        }
+      }
+    });
   }
 
   initEngines() {
@@ -532,6 +565,11 @@ export class FloorPlanArchitectApp {
 
   switchTab(tab) {
     this.activeTab = tab;
+
+    if (this.pillNav) {
+      this.pillNav.setActiveHref(`#${tab}`);
+    }
+
     document.querySelectorAll('.view-tab-btn').forEach(btn => {
       if (btn.getAttribute('data-tab') === tab) {
         btn.classList.add('active');

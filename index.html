@@ -14,6 +14,10 @@
   <link rel="stylesheet" href="./css/studio.css">
   <link rel="stylesheet" href="./css/editor.css">
   <link rel="stylesheet" href="./css/components.css">
+  <link rel="stylesheet" href="./css/PillNav.css">
+
+  <!-- GSAP Animation Engine -->
+  <script src="./js/vendor-gsap.js"></script>
 </head>
 <body>
 
@@ -30,10 +34,13 @@
       </div>
     </div>
 
+    <!-- Center Animated PillNav Bar -->
+    <div id="main-pill-nav-container"></div>
+
     <!-- Quick Preset Switcher -->
     <div style="display: flex; align-items: center; gap: 12px;">
       <label class="form-label" style="margin: 0;">LOAD PRESET:</label>
-      <select id="select-preset" class="form-select" style="width: 240px; padding: 6px 10px;">
+      <select id="select-preset" class="form-select" style="width: 230px; padding: 6px 10px;">
         <option value="preset_35x50">35×50 Modern 3BHK (North)</option>
         <option value="preset_30x40">30×40 Compact 2BHK (East)</option>
         <option value="preset_40x60">40×60 Luxury Duplex Villa (North)</option>
