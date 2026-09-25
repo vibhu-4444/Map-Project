@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Residential Floor-Plan Architect — CAD & Spatial Intelligence Studio</title>
+  
+  <!-- Modern Clean Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Architectural Studio Stylesheets -->
+  <link rel="stylesheet" href="./css/studio.css">
+  <link rel="stylesheet" href="./css/editor.css">
+  <link rel="stylesheet" href="./css/components.css">
+</head>
+<body>
+
+  <!-- App Header -->
+  <header class="app-header">
+    <div class="brand-section">
+      <div class="brand-logo">📐</div>
+      <div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span class="brand-name">AI RESIDENTIAL FLOOR-PLAN ARCHITECT</span>
+          <span class="brand-version">v1.0 CAD-ENGINE</span>
+        </div>
+        <div style="font-size: 11px; color: var(--text-muted);">Deterministic Geometry • Spatial Feasibility • 3D Studio</div>
+      </div>
+    </div>
+
+    <!-- Quick Preset Switcher -->
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <label class="form-label" style="margin: 0;">LOAD PRESET:</label>
+      <select id="select-preset" class="form-select" style="width: 240px; padding: 6px 10px;">
+        <option value="preset_35x50">35×50 Modern 3BHK (North)</option>
+        <option value="preset_30x40">30×40 Compact 2BHK (East)</option>
+        <option value="preset_40x60">40×60 Luxury Duplex Villa (North)</option>
+      </select>
+
+      <button id="btn-export-json" class="btn-secondary" title="Export Project Data as JSON">💾 Export JSON</button>
+    </div>
+  </header>
+
+  <!-- App Shell -->
+  <main class="app-shell">
+    
+    <!-- LEFT SIDEBAR: Plot Configuration & Natural Language AI Requirements -->
+    <aside class="sidebar-left">
+      
+      <!-- Section 1: Natural Language AI Prompt -->
+      <div class="panel-section" style="background: #0f2038; border-bottom: 2px solid #1e3a5f;">
+        <div class="panel-header">
+          <span class="panel-title" style="color: var(--accent-cyan);">🤖 AI REQUIREMENT PARSER</span>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Describe requirements in natural language:</label>
+          <textarea id="input-ai-prompt" class="form-textarea" rows="3" 
+            placeholder="e.g. 3BHK duplex with spacious open kitchen, front car porch, attached bath, and pooja room facing north-east..."></textarea>
+        </div>
+        <button id="btn-ai-parse" class="btn-primary" style="margin-bottom: 8px;">
+          ⚡ Parse & Synthesize House Spec
+        </button>
+        <div id="ai-response-banner" style="display: none; padding: 8px 10px; background: rgba(56, 189, 248, 0.1); border: 1px solid var(--accent-cyan); border-radius: 6px; font-size: 12px;"></div>
+      </div>
+
+      <!-- Section 2: Plot & Setback Configuration -->
+      <div class="panel-section">
+        <div class="panel-header">
+          <span class="panel-title">1. PLOT & SETBACK GEOMETRY</span>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">WIDTH (FT)</label>
+            <input type="number" id="input-plot-w" class="form-input" value="35" min="15" max="200">
+          </div>
+          <div class="form-group">
+            <label class="form-label">LENGTH (FT)</label>
+            <input type="number" id="input-plot-l" class="form-input" value="50" min="20" max="300">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">ORIENTATION (NORTH DIRECTION)</label>
+          <select id="select-orientation" class="form-select">
+            <option value="north" selected>North Facing</option>
+            <option value="east">East Facing</option>
+            <option value="south">South Facing</option>
+            <option value="west">West Facing</option>
+          </select>
+        </div>
+
+        <div style="font-size: 11px; font-weight: 700; color: var(--text-secondary); margin: 8px 0 4px 0;">MANDATORY SETBACKS (FT)</div>
+        <div class="form-row" style="margin-bottom: 6px;">
+          <div class="form-group">
+            <label class="form-label">FRONT</label>
+            <input type="number" id="input-sb-front" class="form-input" value="5" min="0" step="0.5">
+          </div>
+          <div class="form-group">
+            <label class="form-label">REAR</label>
+            <input type="number" id="input-sb-rear" class="form-input" value="4" min="0" step="0.5">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">LEFT SIDE</label>
+            <input type="number" id="input-sb-left" class="form-input" value="3" min="0" step="0.5">
+          </div>
+          <div class="form-group">
+            <label class="form-label">RIGHT SIDE</label>
+            <input type="number" id="input-sb-right" class="form-input" value="3" min="0" step="0.5">
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 3: Spatial Feasibility Diagnosis -->
+      <div class="panel-section">
+        <div class="panel-header">
+          <span class="panel-title">2. SPATIAL FEASIBILITY</span>
+          <span id="feasibility-badge" class="badge" style="background: var(--accent-emerald); color: #0f172a;">FEASIBLE</span>
+        </div>
+        <div id="feasibility-desc" style="font-size: 12px; color: var(--text-secondary); line-height: 1.4;"></div>
+      </div>
+
+      <!-- Section 4: Architectural Strategy Alternatives -->
+      <div class="panel-section" style="flex: 1;">
+        <div class="panel-header">
+          <span class="panel-title">3. LAYOUT CANDIDATES</span>
+          <button id="btn-generate-layouts" class="btn-secondary" style="font-size: 11px; padding: 4px 8px;">Re-Generate</button>
+        </div>
+        <div id="candidates-list">
+          <!-- Populated dynamically with Strategy A, B, C cards -->
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- CENTER WORKSPACE: 2D CAD Canvas & 3D WebGL Viewport -->
+    <section class="workspace-center">
+      
+      <!-- Top Viewport Navigation Toolbar -->
+      <div class="viewport-toolbar">
+        <div class="view-tabs">
+          <button class="view-tab-btn active" data-tab="editor2d">📐 2D CAD Plan</button>
+          <button class="view-tab-btn" data-tab="viewer3d">🧊 3D Model</button>
+          <button class="view-tab-btn" data-tab="schedule">📊 Room Schedule</button>
+          <button class="view-tab-btn" data-tab="costs">💰 Cost Estimator</button>
+          <button class="view-tab-btn" data-tab="vastu">🧭 Vastu Audit</button>
+        </div>
+
+        <div class="viewport-tools">
+          <button id="btn-undo" class="tool-btn" disabled title="Undo (Ctrl+Z)">↩ Undo</button>
+          <button id="btn-redo" class="tool-btn" disabled title="Redo (Ctrl+Y)">↪ Redo</button>
+          
+          <div style="width: 1px; height: 20px; background: var(--border-color); margin: 0 4px;"></div>
+          
+          <!-- Export Actions -->
+          <button id="btn-export-pdf" class="tool-btn" style="color: var(--accent-cyan); font-weight: 700;">🖨 Print / PDF Sheet</button>
+          <button id="btn-export-svg" class="tool-btn">SVG Vector</button>
+          <button id="btn-export-png" class="tool-btn">PNG</button>
+          <button id="btn-export-dxf" class="tool-btn">AutoCAD DXF</button>
+        </div>
+      </div>
+
+      <!-- View 1: 2D Interactive CAD Viewport -->
+      <div id="cad-viewport-container" class="canvas-container">
+        <!-- SVG Canvas rendered dynamically by FloorPlanRenderer2D -->
+      </div>
+
+      <!-- View 2: 3D Architectural Isometric Viewport -->
+      <div id="viewer3d-container" class="canvas-container" style="display: none;">
+        <!-- 3D Canvas rendered dynamically by ArchitecturalViewer3D -->
+      </div>
+
+      <!-- View 3: Room Schedule & Area Table View -->
+      <div id="schedule-view-container" class="canvas-container" style="display: none; padding: 24px; overflow-y: auto;">
+        <h2 style="font-size: 18px; margin-bottom: 16px;">Comprehensive Room Schedule & Area Statement</h2>
+        <div id="area-summary-metrics"></div>
+        <table class="studio-table" style="background: var(--bg-panel); border-radius: 8px; overflow: hidden;">
+          <thead>
+            <tr>
+              <th>Space / Room</th>
+              <th>Dimensions (W × L)</th>
+              <th style="text-align: right;">Internal Carpet Area</th>
+              <th style="text-align: right;">% Carpet Area</th>
+            </tr>
+          </thead>
+          <tbody id="area-schedule-tbody"></tbody>
+        </table>
+      </div>
+
+      <!-- View 4: Construction Cost Estimator View -->
+      <div id="cost-view-container" class="canvas-container" style="display: none; padding: 24px; overflow-y: auto;">
+        <h2 style="font-size: 18px; margin-bottom: 8px;">Itemized Construction Cost Estimation (BoQ)</h2>
+        <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 20px;">
+          Configurable estimation calculated from authoritative built-up area and trade package benchmarks.
+        </p>
+
+        <!-- Finish Tiers Switcher -->
+        <div style="display: flex; gap: 12px; margin-bottom: 24px;">
+          <button class="tier-btn btn-secondary" data-tier="economy">Economy (₹1,750/sq.ft)</button>
+          <button class="tier-btn btn-secondary active" data-tier="standard" style="border-color: var(--accent-cyan); color: var(--accent-cyan);">Standard (₹2,250/sq.ft)</button>
+          <button class="tier-btn btn-secondary" data-tier="premium">Premium (₹2,950/sq.ft)</button>
+          <button class="tier-btn btn-secondary" data-tier="luxury">Luxury (₹3,850/sq.ft)</button>
+        </div>
+
+        <!-- Expected Total Card -->
+        <div style="background: var(--bg-panel); padding: 20px; border-radius: 8px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; border-left: 4px solid var(--accent-emerald);">
+          <div>
+            <div style="font-size: 12px; color: var(--text-muted);">TOTAL ESTIMATED CONSTRUCTION COST</div>
+            <div id="cost-expected-val" style="font-size: 28px; font-weight: 800; color: var(--accent-emerald);">₹33.75 Lakhs</div>
+            <div id="cost-range-val" style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">Range: ₹31.72 Lakhs — ₹36.45 Lakhs</div>
+          </div>
+          <div style="text-align: right; font-size: 12px; color: var(--text-muted);">
+            Based on Built-Up Area (BUA)<br>Includes RCC Structure, Finishes & Contingencies
+          </div>
+        </div>
+
+        <table class="studio-table" style="background: var(--bg-panel); border-radius: 8px; overflow: hidden;">
+          <thead>
+            <tr>
+              <th>Work Package / Trade</th>
+              <th>Share (%)</th>
+              <th style="text-align: right;">Estimated Package Cost</th>
+            </tr>
+          </thead>
+          <tbody id="cost-packages-tbody"></tbody>
+        </table>
+      </div>
+
+      <!-- View 5: Vastu Compliance Audit View -->
+      <div id="vastu-view-container" class="canvas-container" style="display: none; padding: 24px; overflow-y: auto;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <div>
+            <h2 style="font-size: 18px;">Vastu Directional Alignment Audit</h2>
+            <div style="font-size: 13px; color: var(--text-secondary);">Calculated according to Plot North orientation octants.</div>
+          </div>
+          <div style="background: var(--bg-panel); padding: 8px 16px; border-radius: 8px; text-align: right;">
+            <div style="font-size: 11px; color: var(--text-muted);">VASTU COMPLIANCE SCORE</div>
+            <div id="vastu-score-val" style="font-size: 20px; font-weight: 800; color: var(--accent-cyan);">85% (Favorable)</div>
+          </div>
+        </div>
+
+        <div id="vastu-findings-list"></div>
+      </div>
+
+      <!-- Bottom CAD HUD Overlay -->
+      <div class="cad-hud-overlay">
+        <div class="cad-hud-item">GRID: <strong>1′-0″ (304.8mm)</strong></div>
+        <div class="cad-hud-item">SNAP: <strong>ACTIVE</strong></div>
+        <div class="cad-hud-item">DRAG ROOM TO MOVE • DRAG CORNERS TO RESIZE</div>
+      </div>
+
+    </section>
+
+    <!-- RIGHT SIDEBAR: Live Validation, Room Properties, Display Toggles -->
+    <aside class="sidebar-right">
+      
+      <!-- Section 1: Live Constraint & Code Validator -->
+      <div class="panel-section">
+        <div class="panel-header">
+          <span class="panel-title">LIVE CODE VALIDATION</span>
+        </div>
+        <div id="validation-summary-pill" style="margin-bottom: 10px; font-size: 12px;"></div>
+        <div id="validation-issues-list" style="max-height: 220px; overflow-y: auto;">
+          <!-- Validation cards rendered dynamically -->
+        </div>
+      </div>
+
+      <!-- Section 2: Room Properties Inspector -->
+      <div class="panel-section" style="flex: 1;">
+        <div class="panel-header">
+          <span class="panel-title">ROOM PROPERTIES</span>
+        </div>
+        <div id="properties-panel-content">
+          <div style="color: var(--text-muted); font-size: 13px; text-align: center; padding: 24px 0;">
+            Click any room on the floor plan to inspect dimensions and properties.
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 3: Viewport Layer Display Toggles -->
+      <div class="panel-section">
+        <div class="panel-header">
+          <span class="panel-title">CAD LAYER TOGGLES</span>
+        </div>
+
+        <div class="toggle-item">
+          <span>Architectural Grid</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="toggle-grid" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div class="toggle-item">
+          <span>Dimension Lines & Strings</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="toggle-dims" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div class="toggle-item">
+          <span>Furniture Layout Symbols</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="toggle-furniture" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div class="toggle-item">
+          <span>Buildable Setback Envelope</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="toggle-setbacks" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+
+    </aside>
+
+  </main>
+
+  <!-- Application Bootstrap -->
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>

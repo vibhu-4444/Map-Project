@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Unit Test Runner — AI Residential Floor-Plan Architect</title>
+  <style>
+    body { font-family: 'JetBrains Mono', monospace; background: #0f172a; color: #f8fafc; padding: 30px; }
+    h1 { color: #38bdf8; font-size: 20px; }
+    .pass { color: #10b981; margin: 4px 0; }
+    .fail { color: #ef4444; font-weight: bold; margin: 4px 0; }
+    .summary { margin-top: 20px; padding: 15px; border-radius: 6px; background: #1e293b; font-size: 16px; }
+  </style>
+</head>
+<body>
+  <h1>AI Residential Floor-Plan Architect — In-Browser Test Suite</h1>
+  <div id="output"></div>
+  <div id="summary" class="summary">Running tests...</div>
+
+  <script type="module">
+    import { runGeometryTests } from './test-geometry.js';
+    import { runFeasibilityTests } from './test-feasibility.js';
+    import { runValidatorTests } from './test-validator.js';
+
+    let passed = 0;
+    let failed = 0;
+    const out = document.getElementById('output');
+
+    const assert = {
+      ok(cond, msg) {
+        if (cond) {
+          passed++;
+          out.innerHTML += `<div class="pass">✓ PASS: ${msg}</div>`;
+        } else {
+          failed++;
+          out.innerHTML += `<div class="fail">✗ FAIL: ${msg}</div>`;
+        }
+      },
+      equal(act, exp, msg) {
+        if (act === exp) {
+          passed++;
+          out.innerHTML += `<div class="pass">✓ PASS: ${msg}</div>`;
+        } else {
+          failed++;
+          out.innerHTML += `<div class="fail">✗ FAIL: ${msg} (Expected: ${exp}, Actual: ${act})</div>`;
+        }
+      }
+    };
+
+    try {
+      runGeometryTests(assert);
+      runFeasibilityTests(assert);
+      runValidatorTests(assert);
+    } catch (e) {
+      failed++;
+      out.innerHTML += `<div class="fail">EXCEPTION: ${e.message}</div>`;
+    }
+
+    const summary = document.getElementById('summary');
+    if (failed === 0) {
+      summary.innerHTML = `<span style="color: #10b981;">✓ ALL TESTS PASSED: ${passed} assertions verified.</span>`;
+    } else {
+      summary.innerHTML = `<span style="color: #ef4444;">✗ TESTS FAILED: ${passed} passed, ${failed} failed.</span>`;
+    }
+  </script>
+</body>
+</html>
