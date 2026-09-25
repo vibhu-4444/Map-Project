@@ -1,4 +1,4 @@
-# Development Roadmap & Status — AI Residential Floor-Plan Architect
+# Development Roadmap & Status — Craft Your Archi
 
 This document records the exact development progress, completed vertical slices, currently active milestones, and future phases.
 

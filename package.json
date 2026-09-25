@@ -1,7 +1,7 @@
 {
-  "name": "ai-residential-floorplan-architect",
+  "name": "craft-your-archi",
   "version": "1.0.0",
-  "description": "AI Residential Floor-Plan Architect — CAD & Spatial Intelligence Platform",
+  "description": "Craft Your Archi — AI Residential Floor-Plan Architect CAD & Spatial Intelligence Platform",
   "type": "module",
   "scripts": {
     "test": "node tests/run-all-tests.js",

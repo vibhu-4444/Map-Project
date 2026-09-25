@@ -1,4 +1,4 @@
-# AI Residential Floor-Plan Architect
+# Craft Your Archi — AI Residential Floor-Plan Architect
 
 An intelligent, modular, and genuinely functional residential floor-planning, spatial feasibility, interactive editing, validation, 3D visualization, and architectural export platform.
 
@@ -6,7 +6,7 @@ An intelligent, modular, and genuinely functional residential floor-planning, sp
 
 ## Overview
 
-AI Residential Floor-Plan Architect allows homeowners, civil engineers, and architects to:
+**Craft Your Archi** allows homeowners, civil engineers, and architects to:
 1. Define plot geometries, orientation, road access, and setback constraints.
 2. Enter natural language residential requirements (e.g. *"3BHK with south-west master bedroom, open kitchen, pooja room, and front car porch"*).
 3. Perform rigorous deterministic spatial feasibility checks before generating layouts.
@@ -60,7 +60,7 @@ The platform is designed using Clean Architecture principles to guarantee that *
 ## Project Structure
 
 ```
-ai-residential-floorplan-architect/
+craft-your-archi/
 ├── index.html                  # Main application entry point & modular UI shell
 ├── serve.ps1                   # Lightweight PowerShell HTTP development server
 ├── css/

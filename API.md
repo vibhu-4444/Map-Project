@@ -1,4 +1,4 @@
-# API & Service Interface Specification — AI Residential Floor-Plan Architect
+# API & Service Interface Specification — Craft Your Archi
 
 This document specifies the internal and service boundary interfaces for the platform. In keeping with Clean Architecture, these interfaces can be backed by client-side Web Workers, in-process engines, or remote REST/GraphQL services without altering the consumer code.
 

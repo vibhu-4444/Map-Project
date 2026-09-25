@@ -1,4 +1,4 @@
-# Architecture Specification — AI Residential Floor-Plan Architect
+# Architecture Specification — Craft Your Archi
 
 ## 1. Architectural Philosophy: Clean, Decoupled & Stitch AI Ready
 
