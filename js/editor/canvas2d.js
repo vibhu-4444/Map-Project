@@ -49,17 +49,17 @@ export class FloorPlanRenderer2D {
 
     let svgHtml = `
       <svg id="cad-svg-canvas" viewBox="${vbX} ${vbY} ${vbW} ${vbH}" 
-           style="width: 100%; height: 100%; display: block; background: #0f172a; user-select: none;"
+           style="width: 100%; height: 100%; display: block; background: radial-gradient(circle at 50% 50%, #0d111a 0%, #06070a 100%); user-select: none;"
            xmlns="http://www.w3.org/2000/svg">
         
         <defs>
-          <!-- Grid Pattern -->
+          <!-- Precision Blueprint Grid Pattern -->
           <pattern id="grid-minor" width="304.8" height="304.8" patternUnits="userSpaceOnUse">
-            <path d="M 304.8 0 L 0 0 0 304.8" fill="none" stroke="#1e293b" stroke-width="6"/>
+            <path d="M 304.8 0 L 0 0 0 304.8" fill="none" stroke="rgba(255, 255, 255, 0.04)" stroke-width="6"/>
           </pattern>
           <pattern id="grid-major" width="1524" height="1524" patternUnits="userSpaceOnUse">
             <rect width="1524" height="1524" fill="url(#grid-minor)"/>
-            <path d="M 1524 0 L 0 0 0 1524" fill="none" stroke="#334155" stroke-width="14"/>
+            <path d="M 1524 0 L 0 0 0 1524" fill="none" stroke="rgba(56, 189, 248, 0.12)" stroke-width="14"/>
           </pattern>
           
           <!-- Drop Shadows & Filters -->

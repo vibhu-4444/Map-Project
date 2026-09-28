@@ -1,33 +1,58 @@
 /**
- * Architectural Studio Design System
- * Modern dark architectural studio palette with precision typography and micro-animations.
+ * Architectural Studio Design System — World-Class Apple & Linear Aesthetic
+ * Ultra-refined Obsidian & Frosted Glass Palette with Fluid Micro-Interactions.
  */
 
 :root {
-  --bg-app: #090d16;
-  --bg-sidebar: #0f172a;
-  --bg-panel: #1e293b;
-  --bg-panel-hover: #334155;
-  --border-color: #334155;
-  --border-focus: #38bdf8;
+  /* Color Palette — Deep Space Obsidian & Titanium */
+  --bg-deep: #06070a;
+  --bg-app: #090a0f;
+  --bg-surface: rgba(15, 18, 26, 0.72);
+  --bg-surface-elevated: rgba(22, 27, 40, 0.85);
+  --bg-panel: rgba(255, 255, 255, 0.03);
+  --bg-panel-hover: rgba(255, 255, 255, 0.06);
+  --bg-input: rgba(10, 13, 20, 0.65);
   
+  /* Hairline Delicate Borders */
+  --border-subtle: rgba(255, 255, 255, 0.07);
+  --border-medium: rgba(255, 255, 255, 0.12);
+  --border-highlight: rgba(255, 255, 255, 0.18);
+  --border-focus: #38bdf8;
+  --border-color: var(--border-subtle);
+
+  /* Typography Hierarchy */
   --text-main: #f8fafc;
+  --text-primary: #f1f5f9;
   --text-secondary: #94a3b8;
   --text-muted: #64748b;
+  --text-faint: #475569;
 
+  /* Vivid Architectural Neon & Metallic Accents */
   --accent-cyan: #38bdf8;
+  --accent-cyan-glow: rgba(56, 189, 248, 0.35);
   --accent-blue: #3b82f6;
+  --accent-indigo: #6366f1;
   --accent-emerald: #10b981;
+  --accent-emerald-glow: rgba(16, 185, 129, 0.3);
   --accent-amber: #f59e0b;
-  --accent-rose: #ef4444;
-  --accent-purple: #8b5cf6;
+  --accent-amber-glow: rgba(245, 158, 11, 0.3);
+  --accent-rose: #f43f5e;
+  --accent-rose-glow: rgba(244, 63, 94, 0.3);
+  --accent-purple: #a855f7;
 
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.5);
+  /* Shadows & Glassmorphic Depths */
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.6);
+  --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08);
 
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', Menlo, Consolas, monospace;
+  /* Fonts */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', Menlo, Consolas, monospace;
+
+  /* Smooth Spring Transitions */
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 * {
@@ -36,81 +61,211 @@
   padding: 0;
 }
 
-body {
+html, body {
   font-family: var(--font-sans);
-  background-color: var(--bg-app);
+  background-color: var(--bg-deep);
   color: var(--text-main);
   height: 100vh;
+  width: 100vw;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* App Header */
+/* Background Ambient Lighting */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 400px;
+  background: radial-gradient(ellipse 80% 60% at 50% -20%, rgba(56, 189, 248, 0.08), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ==========================================================================
+   APP HEADER — Apple Floating Frosted Bar
+   ========================================================================== */
 .app-header {
-  height: 56px;
-  background: var(--bg-sidebar);
-  border-bottom: 1px solid var(--border-color);
+  height: 64px;
+  background: rgba(10, 13, 20, 0.78);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border-bottom: 1px solid var(--border-subtle);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
-  z-index: 50;
+  padding: 0 24px;
+  z-index: 80;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
 }
 
 .brand-section {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
+  user-select: none;
 }
 
-.brand-logo {
-  width: 32px;
-  height: 32px;
-  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
-  border-radius: 8px;
+.brand-logo-badge {
+  width: 38px;
+  height: 38px;
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(99, 102, 241, 0.25));
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 900;
-  font-size: 18px;
-  color: #0f172a;
+  font-size: 20px;
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s var(--ease-spring), box-shadow 0.3s var(--ease-spring);
+  cursor: pointer;
+}
+
+.brand-logo-badge:hover {
+  transform: scale(1.06) rotate(-4deg);
+  box-shadow: 0 0 24px rgba(56, 189, 248, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.brand-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.brand-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .brand-name {
-  font-size: 15px;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.brand-badge {
+  font-size: 10px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--accent-cyan);
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  padding: 2px 7px;
+  border-radius: 9999px;
+  letter-spacing: 0.4px;
+}
+
+.brand-subtitle {
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.2px;
+  font-weight: 500;
+}
+
+/* Header Right Actions */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.preset-pill-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  border-radius: 9999px;
+  padding: 4px 6px 4px 12px;
+  transition: border-color 0.2s;
+}
+
+.preset-pill-group:hover {
+  border-color: var(--border-medium);
+}
+
+.preset-label {
+  font-size: 10.5px;
   font-weight: 700;
   letter-spacing: 0.5px;
-  color: var(--text-main);
+  color: var(--text-muted);
+  text-transform: uppercase;
 }
 
-.brand-version {
-  font-size: 10px;
-  background: rgba(56, 189, 248, 0.15);
-  color: var(--accent-cyan);
-  padding: 2px 6px;
-  border-radius: 4px;
+.preset-select {
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-size: 12px;
   font-weight: 600;
-  font-family: var(--font-mono);
+  font-family: inherit;
+  outline: none;
+  cursor: pointer;
+  padding: 4px 6px;
 }
 
-/* App Shell Layout */
+.preset-select option {
+  background-color: #0f131c;
+  color: #fff;
+}
+
+.btn-header-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+  border: 1px solid var(--border-medium);
+  border-radius: 9999px;
+  color: var(--text-primary);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 7px 14px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.2s var(--ease-spring);
+}
+
+.btn-header-action:hover {
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(56, 189, 248, 0.08));
+  border-color: rgba(56, 189, 248, 0.4);
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(56, 189, 248, 0.25);
+}
+
+/* ==========================================================================
+   APP SHELL LAYOUT
+   ========================================================================== */
 .app-shell {
   flex: 1;
   display: flex;
   overflow: hidden;
+  position: relative;
+  z-index: 10;
 }
 
-/* Left Sidebar (Configuration & AI Requirements) */
+/* Left Sidebar (Configuration & AI Studio) */
 .sidebar-left {
-  width: 380px;
-  background: var(--bg-sidebar);
-  border-right: 1px solid var(--border-color);
+  width: 400px;
+  background: rgba(11, 14, 22, 0.75);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-right: 1px solid var(--border-subtle);
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  z-index: 20;
+  z-index: 30;
 }
 
 /* Center Workspace Viewport */
@@ -118,34 +273,37 @@ body {
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: var(--bg-app);
+  background: var(--bg-deep);
   position: relative;
   overflow: hidden;
 }
 
-/* Right Sidebar (Validation, Properties, Area Tables) */
+/* Right Sidebar (Validation, Inspector & Layers) */
 .sidebar-right {
-  width: 360px;
-  background: var(--bg-sidebar);
-  border-left: 1px solid var(--border-color);
+  width: 370px;
+  background: rgba(11, 14, 22, 0.75);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-left: 1px solid var(--border-subtle);
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  z-index: 20;
+  z-index: 30;
 }
 
-/* Scrollbars */
+/* Ultra-Sleek Pill Scrollbars */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--bg-sidebar);
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--border-color);
-  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 9999px;
+  transition: background 0.2s;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--text-muted);
+  background: rgba(255, 255, 255, 0.25);
 }

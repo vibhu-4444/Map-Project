@@ -1,155 +1,288 @@
 /**
- * Modular Studio UI Components (Panels, Form Controls, Tables, Badges)
+ * Modular Studio UI Components — Apple & Linear Pro Design
+ * Glassmorphic Panels, Polished Form Steppers, Inspector Cards & iOS 18 Toggles.
  */
 
-/* Accordion & Panel Sections */
+/* ==========================================================================
+   PANEL SECTIONS & ACCORDIONS
+   ========================================================================== */
 .panel-section {
-  padding: 16px;
-  border-bottom: 1px solid var(--border-color);
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--border-subtle);
+  position: relative;
 }
 
 .panel-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .panel-title {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--text-secondary);
+  letter-spacing: 0.8px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
-/* Form Controls */
+/* ==========================================================================
+   AI REQUIREMENT PARSER HERO CARD
+   ========================================================================== */
+.ai-studio-card {
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.05), rgba(99, 102, 241, 0.04));
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  margin-bottom: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.ai-studio-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   FORM CONTROLS & PRECISION INPUTS
+   ========================================================================== */
 .form-group {
   margin-bottom: 12px;
 }
 
 .form-label {
   display: block;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--text-secondary);
-  margin-bottom: 4px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 6px;
 }
 
 .form-input, .form-select, .form-textarea {
   width: 100%;
-  background: var(--bg-app);
-  border: 1px solid var(--border-color);
-  color: var(--text-main);
-  padding: 8px 10px;
-  border-radius: 6px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+  padding: 9px 12px;
+  border-radius: 10px;
   font-size: 13px;
   font-family: inherit;
-  transition: border-color 0.2s;
+  font-weight: 500;
+  transition: all 0.2s var(--ease-spring);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.form-input:hover, .form-select:hover, .form-textarea:hover {
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .form-input:focus, .form-select:focus, .form-textarea:focus {
   outline: none;
-  border-color: var(--border-focus);
+  border-color: var(--accent-cyan);
+  background: rgba(14, 18, 28, 0.85);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.18), inset 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 72px;
+  line-height: 1.5;
 }
 
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 12px;
 }
 
-/* Action Buttons */
+/* ==========================================================================
+   PREMIUM BUTTONS & SHIMMER ACTIONS
+   ========================================================================== */
 .btn-primary {
   width: 100%;
-  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
-  color: #0f172a;
+  background: linear-gradient(135deg, #0284c7 0%, #38bdf8 50%, #6366f1 100%);
+  background-size: 200% 200%;
+  color: #050811;
   border: none;
-  padding: 10px 16px;
-  border-radius: 6px;
+  padding: 11px 18px;
+  border-radius: 10px;
   font-weight: 700;
   font-size: 13px;
+  letter-spacing: 0.3px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  transition: transform 0.1s ease, filter 0.2s ease;
+  box-shadow: 0 4px 20px rgba(14, 165, 233, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  transition: all 0.3s var(--ease-spring);
+  position: relative;
+  overflow: hidden;
 }
 
 .btn-primary:hover {
-  filter: brightness(1.1);
+  background-position: right center;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 25px rgba(56, 189, 248, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
 .btn-primary:active {
-  transform: scale(0.98);
+  transform: translateY(1px);
+  box-shadow: 0 2px 10px rgba(14, 165, 233, 0.3);
 }
 
 .btn-secondary {
-  background: var(--bg-panel);
-  color: var(--text-main);
-  border: 1px solid var(--border-color);
-  padding: 8px 12px;
-  border-radius: 6px;
-  font-size: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  border: 1px solid var(--border-medium);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 11.5px;
   font-weight: 600;
   cursor: pointer;
+  transition: all 0.2s var(--ease-spring);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 .btn-secondary:hover {
-  background: var(--bg-panel-hover);
-  border-color: var(--accent-cyan);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  transform: translateY(-1px);
 }
 
-/* Badges */
+/* ==========================================================================
+   ARCHITECTURAL CANDIDATE CARDS (Strategy A, B, C)
+   ========================================================================== */
+.candidate-card {
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+  cursor: pointer;
+  transition: all 0.25s var(--ease-spring);
+  position: relative;
+}
+
+.candidate-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(56, 189, 248, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.candidate-card.active {
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(99, 102, 241, 0.08)) !important;
+  border-color: var(--accent-cyan) !important;
+  box-shadow: 0 0 24px rgba(56, 189, 248, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+}
+
+/* ==========================================================================
+   LIVE VALIDATION CARDS — Apple Notification Style
+   ========================================================================== */
+.validation-card {
+  padding: 10px 14px;
+  margin-bottom: 8px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+  border-left-width: 4px;
+  position: relative;
+  transition: all 0.2s var(--ease-spring);
+}
+
+.validation-card:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateX(2px);
+}
+
+.validation-card-error {
+  border-left-color: var(--accent-rose);
+  background: linear-gradient(90deg, rgba(244, 63, 94, 0.08), rgba(255, 255, 255, 0.02));
+}
+
+.validation-card-warning {
+  border-left-color: var(--accent-amber);
+  background: linear-gradient(90deg, rgba(245, 158, 11, 0.08), rgba(255, 255, 255, 0.02));
+}
+
+.validation-card-info {
+  border-left-color: var(--accent-cyan);
+  background: linear-gradient(90deg, rgba(56, 189, 248, 0.08), rgba(255, 255, 255, 0.02));
+}
+
+/* ==========================================================================
+   BADGES & CHIPS
+   ========================================================================== */
 .badge {
-  display: inline-block;
-  padding: 3px 8px;
-  border-radius: 4px;
-  font-size: 11px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  border-radius: 9999px;
+  font-size: 10.5px;
   font-weight: 700;
   font-family: var(--font-mono);
+  letter-spacing: 0.4px;
   text-transform: uppercase;
 }
 
-/* Tables */
-.studio-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 12px;
+.badge-feasible {
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  color: var(--accent-emerald);
 }
 
-.studio-table th {
-  background: var(--bg-app);
-  color: var(--text-muted);
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  padding: 8px 10px;
-  text-align: left;
-  border-bottom: 1px solid var(--border-color);
+.badge-warning {
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  color: var(--accent-amber);
 }
 
-.studio-table td {
-  padding: 8px 10px;
-  border-bottom: 1px solid rgba(51, 65, 85, 0.4);
+.badge-error {
+  background: rgba(244, 63, 94, 0.15);
+  border: 1px solid rgba(244, 63, 94, 0.35);
+  color: var(--accent-rose);
 }
 
-/* Checkbox Toggles */
+/* ==========================================================================
+   iOS 18 STYLE GLASS TOGGLE SWITCHES
+   ========================================================================== */
 .toggle-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 8px;
-  font-size: 12px;
+  padding: 8px 0;
+  font-size: 12.5px;
+  font-weight: 500;
   color: var(--text-secondary);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.toggle-item:last-child {
+  border-bottom: none;
 }
 
 .toggle-switch {
   position: relative;
-  width: 34px;
-  height: 18px;
+  width: 38px;
+  height: 22px;
+  flex-shrink: 0;
 }
 
 .toggle-switch input {
@@ -162,27 +295,64 @@
   position: absolute;
   cursor: pointer;
   top: 0; left: 0; right: 0; bottom: 0;
-  background-color: var(--border-color);
-  transition: .2s;
-  border-radius: 18px;
+  background-color: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.25s var(--ease-spring);
+  border-radius: 9999px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .toggle-slider:before {
   position: absolute;
   content: "";
-  height: 12px;
-  width: 12px;
-  left: 3px;
-  bottom: 3px;
-  background-color: white;
-  transition: .2s;
+  height: 16px;
+  width: 16px;
+  left: 2px;
+  bottom: 2px;
+  background: #ffffff;
+  transition: all 0.25s var(--ease-spring);
   border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
 }
 
 .toggle-switch input:checked + .toggle-slider {
-  background-color: var(--accent-cyan);
+  background: linear-gradient(135deg, #0ea5e9, #38bdf8);
+  border-color: rgba(56, 189, 248, 0.4);
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.35);
 }
 
 .toggle-switch input:checked + .toggle-slider:before {
   transform: translateX(16px);
+}
+
+/* ==========================================================================
+   GLASS TABLES & SCHEDULES
+   ========================================================================== */
+.studio-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+
+.studio-table th {
+  background: rgba(10, 13, 20, 0.7);
+  color: var(--text-muted);
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-medium);
+}
+
+.studio-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  color: var(--text-secondary);
+}
+
+.studio-table tr:hover td {
+  background: rgba(56, 189, 248, 0.04);
+  color: #ffffff;
 }

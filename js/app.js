@@ -358,13 +358,15 @@ export class FloorPlanArchitectApp {
     if (!container) return;
 
     container.innerHTML = this.candidates.map((cand, idx) => `
-      <div class="candidate-card ${idx === this.selectedCandidateIndex ? 'active' : ''}" data-index="${idx}" style="cursor: pointer; padding: 12px; margin-bottom: 8px; border-radius: 8px; background: #1e293b; border: 1px solid #334155;">
-        <div style="font-weight: 700; font-size: 13px; color: #f8fafc; margin-bottom: 4px;">${cand.name}</div>
-        <div style="font-size: 11px; color: #94a3b8; line-height: 1.4; margin-bottom: 6px;">${cand.description}</div>
-        <div style="display: flex; gap: 8px; font-size: 11px; font-family: monospace;">
-          <span style="color: #38bdf8;">${cand.metrics.totalCarpetSqFt} sq.ft carpet</span>
-          <span style="color: #cbd5e1;">•</span>
-          <span style="color: #10b981;">${cand.metrics.builtUpSqFt} sq.ft BUA</span>
+      <div class="candidate-card ${idx === this.selectedCandidateIndex ? 'active' : ''}" data-index="${idx}">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+          <div style="font-weight: 700; font-size: 13px; color: var(--text-primary);">${cand.name}</div>
+          <span class="badge" style="background: rgba(255,255,255,0.06); color: var(--text-muted); font-size: 9.5px;">OPTION ${idx + 1}</span>
+        </div>
+        <div style="font-size: 11.5px; color: var(--text-secondary); line-height: 1.4; margin-bottom: 8px;">${cand.description}</div>
+        <div style="display: flex; gap: 8px; font-size: 11px; font-family: var(--font-mono);">
+          <span style="color: var(--accent-cyan); background: rgba(56, 189, 248, 0.08); padding: 2px 7px; border-radius: 4px;">${cand.metrics.totalCarpetSqFt} sq.ft carpet</span>
+          <span style="color: var(--accent-emerald); background: rgba(16, 185, 129, 0.08); padding: 2px 7px; border-radius: 4px;">${cand.metrics.builtUpSqFt} sq.ft BUA</span>
         </div>
       </div>
     `).join('');
@@ -373,11 +375,9 @@ export class FloorPlanArchitectApp {
   highlightActiveCandidateCard(index) {
     document.querySelectorAll('.candidate-card').forEach((card, idx) => {
       if (idx === index) {
-        card.style.borderColor = '#38bdf8';
-        card.style.background = '#0f2942';
+        card.classList.add('active');
       } else {
-        card.style.borderColor = '#334155';
-        card.style.background = '#1e293b';
+        card.classList.remove('active');
       }
     });
   }
@@ -387,21 +387,25 @@ export class FloorPlanArchitectApp {
     const desc = document.getElementById('feasibility-desc');
     if (!badge || !desc) return;
 
-    const colors = {
-      FEASIBLE: '#10b981',
-      TIGHT_FIT: '#f59e0b',
-      OVER_CAPACITY: '#ef4444'
-    };
-
-    badge.style.background = colors[report.verdict] || '#64748b';
+    const badgeClass = report.verdict === 'FEASIBLE' ? 'badge-feasible' : (report.verdict === 'TIGHT_FIT' ? 'badge-warning' : 'badge-error');
+    badge.className = `badge ${badgeClass}`;
     badge.innerText = report.verdict.replace('_', ' ');
 
     desc.innerHTML = `
-      <div style="margin-bottom: 6px;">${report.diagnostics[0] || ''}</div>
-      <div style="display: flex; gap: 12px; font-size: 11px; color: #94a3b8;">
-        <span>Plot: <strong>${report.metrics.grossPlotAreaSqFt} sq.ft</strong></span>
-        <span>Buildable: <strong>${report.metrics.buildableFootprintSqFt} sq.ft</strong></span>
-        <span>Demand: <strong>${report.metrics.totalRequiredBuiltUpSqFt} sq.ft</strong></span>
+      <div style="margin-bottom: 10px; color: var(--text-secondary); line-height: 1.45; font-size: 12px;">${report.diagnostics[0] || ''}</div>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; text-align: center;">
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); padding: 8px 4px; border-radius: 8px;">
+          <div style="font-size: 9.5px; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">PLOT</div>
+          <div style="font-size: 12.5px; font-weight: 700; color: var(--text-primary); font-family: var(--font-mono); margin-top: 2px;">${report.metrics.grossPlotAreaSqFt} <span style="font-size: 9px;">ft²</span></div>
+        </div>
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); padding: 8px 4px; border-radius: 8px;">
+          <div style="font-size: 9.5px; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">BUILDABLE</div>
+          <div style="font-size: 12.5px; font-weight: 700; color: var(--accent-cyan); font-family: var(--font-mono); margin-top: 2px;">${report.metrics.buildableFootprintSqFt} <span style="font-size: 9px;">ft²</span></div>
+        </div>
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); padding: 8px 4px; border-radius: 8px;">
+          <div style="font-size: 9.5px; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">DEMAND</div>
+          <div style="font-size: 12.5px; font-weight: 700; color: var(--accent-emerald); font-family: var(--font-mono); margin-top: 2px;">${report.metrics.totalRequiredBuiltUpSqFt} <span style="font-size: 9px;">ft²</span></div>
+        </div>
       </div>
     `;
   }
@@ -412,17 +416,39 @@ export class FloorPlanArchitectApp {
     if (!list || !summary) return;
 
     if (report.isValid) {
-      summary.innerHTML = `<span style="color: #10b981; font-weight: 600;">✓ All Spatial Constraints Satisfied (0 Errors)</span>`;
+      summary.innerHTML = `
+        <div class="badge badge-feasible" style="padding: 6px 12px; font-size: 11px; width: 100%; justify-content: center;">
+          <span style="font-size: 13px;">✓</span> All Spatial Constraints Satisfied (0 Errors)
+        </div>
+      `;
     } else {
-      summary.innerHTML = `<span style="color: #ef4444; font-weight: 700;">⚠ ${report.errorCount} Error(s), ${report.warningCount} Warning(s)</span>`;
+      summary.innerHTML = `
+        <div class="badge ${report.errorCount > 0 ? 'badge-error' : 'badge-warning'}" style="padding: 6px 12px; font-size: 11px; width: 100%; justify-content: center;">
+          <span>⚠</span> ${report.errorCount} Error(s) • ${report.warningCount} Code Advisory
+        </div>
+      `;
+    }
+
+    if (!report.issues || report.issues.length === 0) {
+      list.innerHTML = `<div style="text-align: center; color: var(--text-muted); font-size: 12px; padding: 20px 0;">No geometric or building code violations found.</div>`;
+      return;
     }
 
     list.innerHTML = report.issues.map(iss => {
-      const color = iss.severity === 'error' ? '#ef4444' : (iss.severity === 'warning' ? '#f59e0b' : '#38bdf8');
+      const cardType = iss.severity === 'error' ? 'validation-card-error' : (iss.severity === 'warning' ? 'validation-card-warning' : 'validation-card-info');
+      const badgeType = iss.severity === 'error' ? 'badge-error' : (iss.severity === 'warning' ? 'badge-warning' : 'badge-feasible');
+      const icon = iss.severity === 'error' ? '⛔' : (iss.severity === 'warning' ? '⚠️' : 'ℹ️');
+
       return `
-        <div style="padding: 8px 12px; border-left: 4px solid ${color}; background: #1e293b; margin-bottom: 6px; border-radius: 4px; font-size: 12px;">
-          <div style="font-weight: 600; color: #f8fafc;">${iss.message}</div>
-          <div style="color: #94a3b8; font-size: 11px; margin-top: 2px;">${iss.suggestion || ''}</div>
+        <div class="validation-card ${cardType}">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+            <div style="font-weight: 700; color: var(--text-primary); font-size: 12px; display: flex; align-items: center; gap: 6px;">
+              <span>${icon}</span>
+              <span>${iss.message}</span>
+            </div>
+            <span class="badge ${badgeType}">${iss.severity.toUpperCase()}</span>
+          </div>
+          ${iss.suggestion ? `<div style="color: var(--text-secondary); font-size: 11px; line-height: 1.4; padding-left: 20px;">${iss.suggestion}</div>` : ''}
         </div>
       `;
     }).join('');
@@ -515,7 +541,7 @@ export class FloorPlanArchitectApp {
     if (!panel) return;
 
     if (!this.selectedRoomId) {
-      panel.innerHTML = `<div style="color: #64748b; font-size: 13px; text-align: center; padding: 24px 0;">Click any room on the floor plan to inspect and edit its properties.</div>`;
+      panel.innerHTML = `<div style="color: var(--text-muted); font-size: 12px; text-align: center; padding: 28px 12px; line-height: 1.5;">Click any room on the floor plan to inspect dimensions, area statement, and design properties.</div>`;
       return;
     }
 
@@ -523,27 +549,32 @@ export class FloorPlanArchitectApp {
     if (!room) return;
 
     panel.innerHTML = `
-      <div style="font-size: 13px;">
-        <div style="margin-bottom: 10px;">
-          <label style="display: block; font-size: 11px; color: #94a3b8; margin-bottom: 2px;">ROOM NAME</label>
-          <input type="text" id="prop-room-name" value="${room.name}" style="width: 100%; background: #0f172a; border: 1px solid #334155; color: #fff; padding: 6px 8px; border-radius: 4px;"/>
+      <div style="font-size: 12.5px;">
+        <div style="margin-bottom: 12px;">
+          <label class="form-label">ROOM DESIGNATION</label>
+          <input type="text" id="prop-room-name" value="${room.name}" class="form-input" style="font-weight: 600;"/>
         </div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;">
+        <div class="form-row" style="margin-bottom: 12px;">
           <div>
-            <label style="display: block; font-size: 11px; color: #94a3b8; margin-bottom: 2px;">WIDTH</label>
-            <input type="text" value="${formatDimension(room.width)}" readonly style="width: 100%; background: #0f172a; border: 1px solid #334155; color: #38bdf8; padding: 6px 8px; border-radius: 4px; font-family: monospace;"/>
+            <label class="form-label">WIDTH</label>
+            <input type="text" value="${formatDimension(room.width)}" readonly class="form-input" style="color: var(--accent-cyan); font-family: var(--font-mono); font-weight: 600;"/>
           </div>
           <div>
-            <label style="display: block; font-size: 11px; color: #94a3b8; margin-bottom: 2px;">LENGTH</label>
-            <input type="text" value="${formatDimension(room.height)}" readonly style="width: 100%; background: #0f172a; border: 1px solid #334155; color: #38bdf8; padding: 6px 8px; border-radius: 4px; font-family: monospace;"/>
+            <label class="form-label">LENGTH</label>
+            <input type="text" value="${formatDimension(room.height)}" readonly class="form-input" style="color: var(--accent-cyan); font-family: var(--font-mono); font-weight: 600;"/>
           </div>
         </div>
-        <div style="margin-bottom: 12px; background: #0f172a; padding: 8px; border-radius: 4px;">
-          <div style="font-size: 11px; color: #94a3b8;">CALCULATED CARPET AREA</div>
-          <div style="font-size: 15px; font-weight: 700; color: #10b981; font-family: monospace;">${room.areaSqFt} sq.ft (${(room.areaSqMm / 1e6).toFixed(2)} m²)</div>
+        <div style="margin-bottom: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); padding: 12px; border-radius: 10px; display: flex; align-items: center; justify-content: space-between;">
+          <div>
+            <div style="font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">CALCULATED CARPET AREA</div>
+            <div style="font-size: 16px; font-weight: 800; color: var(--accent-emerald); font-family: var(--font-mono); margin-top: 2px;">
+              ${room.areaSqFt} <span style="font-size: 11px; font-weight: 500;">sq.ft</span>
+            </div>
+          </div>
+          <span class="badge badge-feasible">${(room.areaSqMm / 1e6).toFixed(2)} m²</span>
         </div>
-        <button id="btn-delete-room" style="width: 100%; padding: 8px; background: #7f1d1d; color: #fca5a5; border: 1px solid #991b1b; border-radius: 6px; cursor: pointer; font-weight: 600;">
-          Delete Selected Space
+        <button id="btn-delete-room" style="width: 100%; padding: 10px; background: rgba(244, 63, 94, 0.12); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.3); border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 12px; transition: all 0.2s;">
+          🗑 Delete Selected Space
         </button>
       </div>
     `;
@@ -570,17 +601,18 @@ export class FloorPlanArchitectApp {
       this.pillNav.setActiveHref(`#${tab}`);
     }
 
-    document.querySelectorAll('.view-tab-btn').forEach(btn => {
-      if (btn.getAttribute('data-tab') === tab) {
-        btn.classList.add('active');
-        btn.style.color = '#38bdf8';
-        btn.style.borderBottom = '2px solid #38bdf8';
-      } else {
-        btn.classList.remove('active');
-        btn.style.color = '#94a3b8';
-        btn.style.borderBottom = 'none';
-      }
-    });
+    const viewNameMap = {
+      editor2d: '2D Interactive Canvas',
+      viewer3d: '3D Spatial Isometric Studio',
+      schedule: 'Room Schedule & Area Statement',
+      costs: 'Itemized Construction BoQ Estimator',
+      vastu: 'Vastu Directional Alignment Audit'
+    };
+
+    const activeViewLabel = document.getElementById('active-view-name');
+    if (activeViewLabel) {
+      activeViewLabel.innerText = viewNameMap[tab] || '2D Interactive Canvas';
+    }
 
     // Toggle panels
     const cadView = document.getElementById('cad-viewport-container');
