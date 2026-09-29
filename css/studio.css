@@ -1,56 +1,54 @@
 /**
- * Architectural Studio Design System — World-Class Apple & Linear Aesthetic
- * Ultra-refined Obsidian & Frosted Glass Palette with Fluid Micro-Interactions.
+ * Craft Your Archi — Luxury Glassmorphic Studio Design System
+ * 100% matched to reference UI: deep graphite atmosphere, warm amber/peach radial glows,
+ * heavy blur frosted glass (blur 40px), delicate specular rim lights, and pill docks.
  */
 
 :root {
-  /* Color Palette — Deep Space Obsidian & Titanium */
-  --bg-deep: #06070a;
-  --bg-app: #090a0f;
-  --bg-surface: rgba(15, 18, 26, 0.72);
-  --bg-surface-elevated: rgba(22, 27, 40, 0.85);
-  --bg-panel: rgba(255, 255, 255, 0.03);
-  --bg-panel-hover: rgba(255, 255, 255, 0.06);
-  --bg-input: rgba(10, 13, 20, 0.65);
-  
-  /* Hairline Delicate Borders */
-  --border-subtle: rgba(255, 255, 255, 0.07);
-  --border-medium: rgba(255, 255, 255, 0.12);
-  --border-highlight: rgba(255, 255, 255, 0.18);
-  --border-focus: #38bdf8;
-  --border-color: var(--border-subtle);
+  /* Color Palette — Reference Image Dark Charcoal & Warm Amber Glow */
+  --bg-deep: #0e0f13;
+  --bg-app: #121318;
+  --bg-glass-frame: rgba(22, 24, 30, 0.65);
+  --bg-glass-card: rgba(28, 30, 38, 0.52);
+  --bg-glass-card-hover: rgba(34, 37, 48, 0.65);
+  --bg-glass-inner-pill: rgba(42, 45, 58, 0.6);
+  --bg-glass-input: rgba(14, 16, 22, 0.6);
 
-  /* Typography Hierarchy */
-  --text-main: #f8fafc;
-  --text-primary: #f1f5f9;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
-  --text-faint: #475569;
+  /* Delicate Glass Borders & Specular Sheens */
+  --glass-border: 1px solid rgba(255, 255, 255, 0.12);
+  --glass-border-light: 1px solid rgba(255, 255, 255, 0.18);
+  --glass-border-subtle: 1px solid rgba(255, 255, 255, 0.08);
+  --border-focus: #ff6a00;
+  --border-color: var(--glass-border-subtle);
 
-  /* Vivid Architectural Neon & Metallic Accents */
-  --accent-cyan: #38bdf8;
-  --accent-cyan-glow: rgba(56, 189, 248, 0.35);
-  --accent-blue: #3b82f6;
-  --accent-indigo: #6366f1;
-  --accent-emerald: #10b981;
-  --accent-emerald-glow: rgba(16, 185, 129, 0.3);
+  /* Text Colors */
+  --text-main: #ffffff;
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
+  --text-faint: #4b5563;
+
+  /* Warm Luminous Accents matching reference image */
+  --accent-orange: #ff6a00;
+  --accent-orange-glow: rgba(255, 106, 0, 0.4);
   --accent-amber: #f59e0b;
-  --accent-amber-glow: rgba(245, 158, 11, 0.3);
-  --accent-rose: #f43f5e;
-  --accent-rose-glow: rgba(244, 63, 94, 0.3);
-  --accent-purple: #a855f7;
+  --accent-amber-glow: rgba(245, 158, 11, 0.35);
+  --accent-lime: #a3e635;
+  --accent-emerald: #10b981;
+  --accent-cyan: #38bdf8;
+  --accent-purple: #c084fc;
 
   /* Shadows & Glassmorphic Depths */
-  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.35);
-  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
-  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.6);
-  --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --shadow-window: 0 40px 100px -20px rgba(0, 0, 0, 0.85), inset 0 1px 1px 0 rgba(255, 255, 255, 0.2);
+  --shadow-card: 0 16px 40px rgba(0, 0, 0, 0.38), inset 0 1px 1px 0 rgba(255, 255, 255, 0.18);
+  --shadow-pill: 0 10px 30px rgba(0, 0, 0, 0.35), inset 0 1px 1px 0 rgba(255, 255, 255, 0.25);
+  --shadow-glow: 0 0 30px rgba(255, 106, 0, 0.3);
 
-  /* Fonts */
+  /* Typography */
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', Menlo, Consolas, monospace;
 
-  /* Smooth Spring Transitions */
+  /* Fluid Spring Transitions */
   --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -69,141 +67,227 @@ html, body {
   width: 100vw;
   overflow: hidden;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Background Ambient Lighting */
+/* ==========================================================================
+   AMBIENT BACKGROUND LIGHTING (Orange / Amber / Peach Mesh Refractions)
+   ========================================================================== */
 body::before {
   content: '';
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 400px;
-  background: radial-gradient(ellipse 80% 60% at 50% -20%, rgba(56, 189, 248, 0.08), transparent 70%);
+  top: 15%;
+  left: 32%;
+  width: 680px;
+  height: 520px;
+  background: radial-gradient(circle at center, rgba(249, 115, 22, 0.38) 0%, rgba(234, 88, 12, 0.16) 45%, transparent 70%);
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  bottom: 8%;
+  right: 18%;
+  width: 550px;
+  height: 480px;
+  background: radial-gradient(circle at center, rgba(245, 158, 11, 0.22) 0%, rgba(168, 85, 247, 0.12) 50%, transparent 70%);
+  filter: blur(90px);
   pointer-events: none;
   z-index: 0;
 }
 
 /* ==========================================================================
-   APP HEADER — Apple Floating Frosted Bar
+   OUTER GLASS APP WINDOW (Desktop App Frame from Reference Image)
    ========================================================================== */
-.app-header {
-  height: 64px;
-  background: rgba(10, 13, 20, 0.78);
-  backdrop-filter: blur(28px) saturate(190%);
-  -webkit-backdrop-filter: blur(28px) saturate(190%);
-  border-bottom: 1px solid var(--border-subtle);
+.glass-app-window {
+  width: calc(100vw - 36px);
+  max-width: 1720px;
+  height: calc(100vh - 36px);
+  background: var(--bg-glass-frame);
+  backdrop-filter: blur(45px) saturate(190%);
+  -webkit-backdrop-filter: blur(45px) saturate(190%);
+  border: var(--glass-border);
+  border-radius: 36px;
+  box-shadow: var(--shadow-window);
   display: flex;
+  overflow: hidden;
+  position: relative;
+  z-index: 10;
+}
+
+/* ==========================================================================
+   LEFT SLIM DOCK RAIL (Matching Left Icon Pill Strip from Reference Image)
+   ========================================================================== */
+.glass-dock-rail {
+  width: 72px;
+  background: rgba(18, 20, 26, 0.65);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding: 0 24px;
-  z-index: 80;
-  position: relative;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+  padding: 24px 0;
+  z-index: 40;
+  flex-shrink: 0;
 }
 
-.brand-section {
+.dock-top-logo {
   display: flex;
   align-items: center;
-  gap: 14px;
-  user-select: none;
+  justify-content: center;
 }
 
-.brand-logo-badge {
-  width: 38px;
-  height: 38px;
-  background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(99, 102, 241, 0.25));
-  border: 1px solid rgba(56, 189, 248, 0.4);
-  border-radius: 12px;
+.dock-logo-squircle {
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, rgba(255, 106, 0, 0.35), rgba(245, 158, 11, 0.2));
+  border: 1px solid rgba(255, 106, 0, 0.5);
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 20px;
-  box-shadow: 0 0 16px rgba(56, 189, 248, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  transition: transform 0.3s var(--ease-spring), box-shadow 0.3s var(--ease-spring);
+  box-shadow: 0 0 20px rgba(255, 106, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.3);
   cursor: pointer;
+  transition: transform 0.25s var(--ease-spring), box-shadow 0.25s var(--ease-spring);
 }
 
-.brand-logo-badge:hover {
-  transform: scale(1.06) rotate(-4deg);
-  box-shadow: 0 0 24px rgba(56, 189, 248, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+.dock-logo-squircle:hover {
+  transform: scale(1.08) rotate(-4deg);
+  box-shadow: 0 0 28px rgba(255, 106, 0, 0.5);
 }
 
-.brand-meta {
+.dock-icon-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+
+.dock-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-spring);
+  position: relative;
+}
+
+.dock-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+  border-color: rgba(255, 255, 255, 0.12);
+  transform: translateY(-1px);
+}
+
+.dock-btn.active {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+}
+
+.dock-btn.has-notification::after {
+  content: '';
+  position: absolute;
+  top: 9px;
+  right: 9px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--accent-orange);
+  box-shadow: 0 0 8px var(--accent-orange);
+}
+
+.dock-bottom-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+
+/* ==========================================================================
+   MAIN CONTENT STAGE (Header + Dashboard Grid)
+   ========================================================================== */
+.glass-main-stage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 26px;
+  overflow-y: auto;
+  gap: 16px;
+  position: relative;
+}
+
+/* Topbar Header matching the Reference Image */
+.glass-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 4px;
+  z-index: 30;
+  flex-shrink: 0;
+}
+
+.topbar-left {
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
 
-.brand-title-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.brand-name {
-  font-size: 14px;
-  font-weight: 800;
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
-  background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.brand-badge {
-  font-size: 10px;
-  font-family: var(--font-mono);
+.topbar-title {
+  font-size: 22px;
   font-weight: 700;
-  color: var(--accent-cyan);
-  background: rgba(56, 189, 248, 0.12);
-  border: 1px solid rgba(56, 189, 248, 0.25);
-  padding: 2px 7px;
-  border-radius: 9999px;
-  letter-spacing: 0.4px;
+  letter-spacing: -0.3px;
+  color: #ffffff;
 }
 
-.brand-subtitle {
-  font-size: 11px;
+.topbar-subtitle {
+  font-size: 11.5px;
   color: var(--text-muted);
   letter-spacing: 0.2px;
   font-weight: 500;
 }
 
-/* Header Right Actions */
-.header-actions {
+.topbar-right {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.preset-pill-group {
-  display: flex;
+.topbar-preset-pill {
+  display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.05);
+  border: var(--glass-border);
   border-radius: 9999px;
-  padding: 4px 6px 4px 12px;
-  transition: border-color 0.2s;
+  padding: 5px 12px;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
 }
 
-.preset-pill-group:hover {
-  border-color: var(--border-medium);
+.preset-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--accent-orange);
+  box-shadow: 0 0 8px var(--accent-orange);
 }
 
-.preset-label {
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  color: var(--text-muted);
-  text-transform: uppercase;
-}
-
-.preset-select {
+.glass-select {
   background: transparent;
   border: none;
   color: var(--text-primary);
@@ -212,83 +296,390 @@ body::before {
   font-family: inherit;
   outline: none;
   cursor: pointer;
-  padding: 4px 6px;
 }
 
-.preset-select option {
-  background-color: #0f131c;
-  color: #fff;
-}
-
-.btn-header-action {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
-  border: 1px solid var(--border-medium);
-  border-radius: 9999px;
-  color: var(--text-primary);
-  font-size: 12px;
-  font-weight: 600;
-  padding: 7px 14px;
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  transition: all 0.2s var(--ease-spring);
-}
-
-.btn-header-action:hover {
-  background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(56, 189, 248, 0.08));
-  border-color: rgba(56, 189, 248, 0.4);
+.glass-select option {
+  background-color: #161820;
   color: #ffffff;
+}
+
+.glass-circle-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  border: var(--glass-border);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 15px;
+  transition: all 0.2s var(--ease-spring);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.15);
+}
+
+.glass-circle-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
   transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(56, 189, 248, 0.25);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.glass-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f97316, #e11d48);
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 800;
+  color: #ffffff;
+  box-shadow: 0 0 14px rgba(249, 115, 22, 0.4);
+  cursor: pointer;
 }
 
 /* ==========================================================================
-   APP SHELL LAYOUT
+   GLASS DASHBOARD GRID (Matching the exact card density of Reference Image)
    ========================================================================== */
-.app-shell {
+.glass-dashboard-grid {
+  display: grid;
+  grid-template-columns: 1.55fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 18px;
   flex: 1;
-  display: flex;
-  overflow: hidden;
+}
+
+/* General Frosted Glass Card */
+.glass-card {
+  background: var(--bg-glass-card);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  border: var(--glass-border);
+  border-radius: 26px;
+  box-shadow: var(--shadow-card);
+  padding: 20px;
   position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+.glass-card:hover {
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.22);
+}
+
+/* ==========================================================================
+   HERO WORKSPACE CARD (Top-Left Large Card in Reference Image)
+   ========================================================================== */
+.glass-hero-card {
+  min-height: 440px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
   z-index: 10;
 }
 
-/* Left Sidebar (Configuration & AI Studio) */
-.sidebar-left {
-  width: 400px;
-  background: rgba(11, 14, 22, 0.75);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border-right: 1px solid var(--border-subtle);
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  z-index: 30;
+.hero-tagline {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--text-muted);
 }
 
-/* Center Workspace Viewport */
-.workspace-center {
+.hero-title {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+  color: #ffffff;
+  margin-top: 2px;
+}
+
+.hero-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Canvas Viewport Container inside Hero Card */
+.hero-canvas-wrapper {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  background: var(--bg-deep);
-  position: relative;
+  border-radius: 18px;
   overflow: hidden;
+  position: relative;
+  background: radial-gradient(circle at 50% 50%, #151822 0%, #0c0e14 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  min-height: 280px;
 }
 
-/* Right Sidebar (Validation, Inspector & Layers) */
-.sidebar-right {
-  width: 370px;
-  background: rgba(11, 14, 22, 0.75);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border-left: 1px solid var(--border-subtle);
+/* FLOATING STATS PILL DOCK (Exactly matching bottom dock in Hero Image!) */
+.hero-stats-dock {
+  position: absolute;
+  bottom: 16px;
+  left: 20px;
+  right: 20px;
+  background: var(--bg-glass-inner-pill);
+  backdrop-filter: blur(35px) saturate(190%);
+  -webkit-backdrop-filter: blur(35px) saturate(190%);
+  border: var(--glass-border-light);
+  border-radius: 20px;
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow-pill);
+  z-index: 20;
+}
+
+.stats-dock-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.stats-dock-val {
+  font-size: 17px;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  color: #ffffff;
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+}
+
+.stats-dock-val small {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.stats-dock-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.dock-color-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+}
+
+.dock-arrow-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.dock-arrow-btn:hover {
+  background: #ffffff;
+  color: #000000;
+  transform: translateX(2px);
+}
+
+/* ==========================================================================
+   TOP-RIGHT CARDS (Feasibility Chart & BoQ Cost Snapshot)
+   ========================================================================== */
+.right-column-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.feasibility-chart-card {
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.card-title-sm {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cost-sales-card {
+  min-height: 200px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cost-value-big {
+  font-size: 32px;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.cost-trend-pill {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent-lime);
+  background: rgba(163, 230, 53, 0.12);
+  border: 1px solid rgba(163, 230, 53, 0.25);
+  padding: 2px 7px;
+  border-radius: 9999px;
+}
+
+.card-preview-art {
+  width: 110px;
+  height: 110px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(255, 106, 0, 0.15), rgba(245, 158, 11, 0.08));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2);
+}
+
+/* ==========================================================================
+   BOTTOM CARD (Layout Alternatives & Room List Table - Matching Reference)
+   ========================================================================== */
+.glass-bottom-card {
+  grid-column: 1 / -1;
+  min-height: 220px;
+}
+
+.bottom-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.bottom-card-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.bottom-pill-dropdown {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border: var(--glass-border);
+  border-radius: 9999px;
+  padding: 4px 12px;
+  font-size: 11.5px;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.table-row-capsule {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  margin-bottom: 8px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all 0.2s var(--ease-spring);
+  cursor: pointer;
+}
+
+.table-row-capsule:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.14);
+  transform: translateY(-1px);
+}
+
+.table-row-capsule.active {
+  background: rgba(255, 106, 0, 0.12);
+  border-color: rgba(255, 106, 0, 0.4);
+  box-shadow: 0 0 16px rgba(255, 106, 0, 0.15);
+}
+
+/* ==========================================================================
+   FLYOUT GLASS PANELS (For AI Brief & Inspector Controls)
+   ========================================================================== */
+.glass-flyout-drawer {
+  position: absolute;
+  top: 72px;
+  bottom: 24px;
+  width: 360px;
+  background: rgba(20, 22, 28, 0.88);
+  backdrop-filter: blur(45px) saturate(190%);
+  -webkit-backdrop-filter: blur(45px) saturate(190%);
+  border: var(--glass-border-light);
+  border-radius: 28px;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7);
+  padding: 22px;
+  z-index: 60;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  z-index: 30;
+  transition: transform 0.35s var(--ease-spring), opacity 0.35s var(--ease-spring);
+}
+
+.glass-flyout-left {
+  left: 88px;
+  transform: translateX(-420px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.glass-flyout-left.is-open {
+  transform: translateX(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.glass-flyout-right {
+  right: 24px;
+  transform: translateX(420px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.glass-flyout-right.is-open {
+  transform: translateX(0);
+  opacity: 1;
+  pointer-events: auto;
 }
 
 /* Ultra-Sleek Pill Scrollbars */
@@ -300,10 +691,9 @@ body::before {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.14);
   border-radius: 9999px;
-  transition: background 0.2s;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.28);
 }
