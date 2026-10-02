@@ -108,15 +108,59 @@ export class FloorPlanArchitectApp {
   setSelectedRoomId(id) {
     this.selectedRoomId = id;
     this.updatePropertiesPanel();
+    if (id) {
+      document.getElementById('flyout-right-drawer')?.classList.add('is-open');
+    }
   }
 
   bindEvents() {
-    // Navigation / Tab Switchers
-    document.querySelectorAll('.view-tab-btn').forEach(btn => {
+    // Navigation / Tab Switchers (Both top view buttons and left dock buttons)
+    document.querySelectorAll('.view-tab-btn, .dock-btn[data-tab]').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const tab = e.currentTarget.getAttribute('data-tab');
-        this.switchTab(tab);
+        if (tab) this.switchTab(tab);
       });
+    });
+
+    // Left Flyout Drawer (AI & Plot Params)
+    const leftDrawer = document.getElementById('flyout-left-drawer');
+    document.getElementById('dock-btn-ai')?.addEventListener('click', () => {
+      leftDrawer?.classList.toggle('is-open');
+    });
+    document.getElementById('btn-hero-ai-open')?.addEventListener('click', () => {
+      leftDrawer?.classList.add('is-open');
+      document.getElementById('input-ai-prompt')?.focus();
+    });
+    document.getElementById('btn-close-flyout-left')?.addEventListener('click', () => {
+      leftDrawer?.classList.remove('is-open');
+    });
+
+    // Right Flyout Drawer (Inspector & Layers)
+    const rightDrawer = document.getElementById('flyout-right-drawer');
+    document.getElementById('dock-btn-inspector')?.addEventListener('click', () => {
+      rightDrawer?.classList.toggle('is-open');
+    });
+    document.getElementById('dock-btn-layers')?.addEventListener('click', () => {
+      rightDrawer?.classList.toggle('is-open');
+    });
+    document.getElementById('btn-close-flyout-right')?.addEventListener('click', () => {
+      rightDrawer?.classList.remove('is-open');
+    });
+
+    // Live Validation Drawer / Toggle
+    document.getElementById('dock-btn-validation')?.addEventListener('click', () => {
+      const list = document.getElementById('validation-issues-list');
+      if (list) {
+        list.style.display = list.style.display === 'none' ? 'block' : 'none';
+      }
+    });
+
+    // Floating Stats Dock Arrow: Cycle to next layout option
+    document.getElementById('dock-stat-next')?.addEventListener('click', () => {
+      if (this.candidates && this.candidates.length > 0) {
+        const nextIdx = (this.selectedCandidateIndex + 1) % this.candidates.length;
+        this.selectCandidate(nextIdx);
+      }
     });
 
     // Undo / Redo Buttons
@@ -149,9 +193,9 @@ export class FloorPlanArchitectApp {
       document.getElementById(id)?.addEventListener('change', () => this.handlePlotInputChange());
     });
 
-    // Strategy Candidate Cards
+    // Strategy Candidate Cards / Capsule Rows
     document.getElementById('candidates-list')?.addEventListener('click', (e) => {
-      const card = e.target.closest('.candidate-card');
+      const card = e.target.closest('.table-row-capsule, .candidate-card');
       if (card) {
         const idx = parseInt(card.getAttribute('data-index'), 10);
         this.selectCandidate(idx);
@@ -357,23 +401,42 @@ export class FloorPlanArchitectApp {
     const container = document.getElementById('candidates-list');
     if (!container) return;
 
+    const icons = ['📐', '🏡', '✨', '🏢', '🏛️'];
+
     container.innerHTML = this.candidates.map((cand, idx) => `
-      <div class="candidate-card ${idx === this.selectedCandidateIndex ? 'active' : ''}" data-index="${idx}">
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
-          <div style="font-weight: 700; font-size: 13px; color: var(--text-primary);">${cand.name}</div>
-          <span class="badge" style="background: rgba(255,255,255,0.06); color: var(--text-muted); font-size: 9.5px;">OPTION ${idx + 1}</span>
+      <div class="table-row-capsule ${idx === this.selectedCandidateIndex ? 'active' : ''}" data-index="${idx}">
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(255, 106, 0, 0.12); border: 1px solid rgba(255, 106, 0, 0.25); display: flex; align-items: center; justify-content: center; font-size: 20px;">
+            ${icons[idx % icons.length]}
+          </div>
+          <div>
+            <div style="font-weight: 700; font-size: 13.5px; color: #ffffff; letter-spacing: -0.2px;">${cand.name}</div>
+            <div style="font-size: 11px; color: var(--text-secondary); margin-top: 2px;">${cand.description}</div>
+          </div>
         </div>
-        <div style="font-size: 11.5px; color: var(--text-secondary); line-height: 1.4; margin-bottom: 8px;">${cand.description}</div>
-        <div style="display: flex; gap: 8px; font-size: 11px; font-family: var(--font-mono);">
-          <span style="color: var(--accent-cyan); background: rgba(56, 189, 248, 0.08); padding: 2px 7px; border-radius: 4px;">${cand.metrics.totalCarpetSqFt} sq.ft carpet</span>
-          <span style="color: var(--accent-emerald); background: rgba(16, 185, 129, 0.08); padding: 2px 7px; border-radius: 4px;">${cand.metrics.builtUpSqFt} sq.ft BUA</span>
+
+        <div style="display: flex; align-items: center; gap: 24px;">
+          <div style="font-size: 11.5px; font-family: var(--font-mono); color: var(--text-secondary); display: flex; align-items: center; gap: 6px;">
+            <span class="dock-color-dot" style="background: #fbbf24;"></span>
+            <span style="color: #fbbf24; font-weight: 600;">${cand.metrics.totalCarpetSqFt}</span> sq.ft carpet
+          </div>
+          <div style="font-size: 11.5px; font-family: var(--font-mono); color: var(--text-secondary); display: flex; align-items: center; gap: 6px;">
+            <span class="dock-color-dot" style="background: #a3e635;"></span>
+            <span style="color: #a3e635; font-weight: 600;">${cand.metrics.builtUpSqFt}</span> sq.ft BUA
+          </div>
+          <div style="width: 65px; height: 20px;">
+            <svg viewBox="0 0 65 20" style="width: 100%; height: 100%; overflow: visible;">
+              <path d="${idx === 0 ? 'M 0 14 Q 16 3, 32 11 T 65 5' : (idx === 1 ? 'M 0 6 Q 16 16, 32 6 T 65 13' : 'M 0 11 Q 20 18, 40 5 T 65 9')}" fill="none" stroke="#fbbf24" stroke-width="1.8" stroke-linecap="round" />
+            </svg>
+          </div>
+          <span style="color: var(--text-muted); font-size: 16px; padding: 0 4px;">•••</span>
         </div>
       </div>
     `).join('');
   }
 
   highlightActiveCandidateCard(index) {
-    document.querySelectorAll('.candidate-card').forEach((card, idx) => {
+    document.querySelectorAll('.table-row-capsule, .candidate-card').forEach((card, idx) => {
       if (idx === index) {
         card.classList.add('active');
       } else {
@@ -390,6 +453,22 @@ export class FloorPlanArchitectApp {
     const badgeClass = report.verdict === 'FEASIBLE' ? 'badge-feasible' : (report.verdict === 'TIGHT_FIT' ? 'badge-warning' : 'badge-error');
     badge.className = `badge ${badgeClass}`;
     badge.innerText = report.verdict.replace('_', ' ');
+
+    // Update Sparkline highlight badge
+    const sparkBadge = document.querySelector('.sparkline-dot-badge');
+    if (sparkBadge && report.metrics) {
+      sparkBadge.innerText = `${Math.min(100, Math.round(report.metrics.coverageRatio * 100))}%`;
+    }
+
+    // Sync values to floating stats dock in hero card
+    const dockPlot = document.getElementById('dock-stat-plot');
+    if (dockPlot && report.metrics) {
+      dockPlot.innerHTML = `${report.metrics.grossPlotAreaSqFt.toLocaleString()} <small>ft²</small>`;
+    }
+    const dockFootprint = document.getElementById('dock-stat-footprint');
+    if (dockFootprint && report.metrics) {
+      dockFootprint.innerHTML = `${report.metrics.buildableFootprintSqFt.toLocaleString()} <small>ft²</small>`;
+    }
 
     desc.innerHTML = `
       <div style="margin-bottom: 10px; color: var(--text-secondary); line-height: 1.45; font-size: 12px;">${report.diagnostics[0] || ''}</div>
@@ -495,10 +574,17 @@ export class FloorPlanArchitectApp {
     if (!scoreVal || !findingsList) return;
 
     scoreVal.innerText = `${report.overallScore}% (${report.overallRating})`;
+
+    // Sync to hero card floating stats dock
+    const dockVastu = document.getElementById('dock-stat-vastu');
+    if (dockVastu) {
+      dockVastu.innerHTML = `${report.overallScore} <small>%</small>`;
+    }
+
     findingsList.innerHTML = report.findings.map(f => {
       const color = f.status === 'optimal' ? '#10b981' : (f.status === 'conflict' ? '#ef4444' : '#f59e0b');
       return `
-        <div style="padding: 8px 10px; background: #1e293b; border-radius: 6px; margin-bottom: 6px; border-left: 3px solid ${color}; font-size: 12px;">
+        <div style="padding: 8px 10px; background: rgba(255, 255, 255, 0.04); border-radius: 8px; margin-bottom: 6px; border-left: 3px solid ${color}; font-size: 12px; border: 1px solid rgba(255, 255, 255, 0.06);">
           <div style="display: flex; justify-content: space-between; font-weight: 600;">
             <span style="color: #f8fafc;">${f.roomName}</span>
             <span style="color: ${color}; font-family: monospace;">${f.currentOctant} (${f.score}%)</span>
@@ -524,6 +610,21 @@ export class FloorPlanArchitectApp {
 
     if (costExpected) costExpected.innerText = estimate.range.expectedFormatted;
     if (costRange) costRange.innerText = `Range: ${estimate.range.minFormatted} — ${estimate.range.maxFormatted} (₹${estimate.baseRatePerSqFt}/sq.ft)`;
+
+    // Sync to hero card floating stats dock
+    const dockCost = document.getElementById('dock-stat-cost');
+    if (dockCost) {
+      dockCost.innerHTML = `${estimate.range.expectedFormatted}`;
+    }
+
+    // Keep tier pill buttons in sync
+    document.querySelectorAll('.tier-btn').forEach(btn => {
+      if (btn.getAttribute('data-tier') === tierId) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
 
     if (pkgTable) {
       pkgTable.innerHTML = estimate.packages.map(pkg => `
@@ -600,6 +701,15 @@ export class FloorPlanArchitectApp {
     if (this.pillNav) {
       this.pillNav.setActiveHref(`#${tab}`);
     }
+
+    // Update left dock navigation button active classes
+    document.querySelectorAll('.dock-btn[data-tab]').forEach(btn => {
+      if (btn.getAttribute('data-tab') === tab) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
 
     const viewNameMap = {
       editor2d: '2D Interactive Canvas',
