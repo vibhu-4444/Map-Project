@@ -1,19 +1,18 @@
 {
-  "name": "craft-your-archi",
+  "name": "skillset-dashboard",
   "version": "1.0.0",
-  "description": "Craft Your Archi — AI Residential Floor-Plan Architect CAD & Spatial Intelligence Platform",
+  "description": "Skillset — Modern Neomorphic Analytics & Learning Management Dashboard",
   "type": "module",
   "scripts": {
-    "test": "node tests/run-all-tests.js",
-    "serve": "node -e \"import('./serve.ps1')\""
+    "start": "node server.js",
+    "serve": "node server.js"
   },
   "keywords": [
-    "floorplan",
-    "architecture",
-    "cad",
-    "computational-geometry",
-    "spatial-feasibility",
-    "3d-visualization"
+    "dashboard",
+    "neomorphism",
+    "analytics",
+    "lms",
+    "ui"
   ],
   "author": "Antigravity",
   "license": "MIT"
